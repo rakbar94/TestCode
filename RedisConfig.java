@@ -1,15 +1,9 @@
 @Configuration
-@EnableCaching
 public class RedisConfig {
-
     @Bean
-    public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
-        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
-            .entryTtl(Duration.ofMinutes(10)) // global TTL
-            .disableCachingNullValues();
-
-        return RedisCacheManager.builder(connectionFactory)
-            .cacheDefaults(config)
-            .build();
+    public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, String> template = new RedisTemplate<>();
+        template.setConnectionFactory(factory);
+        return template;
     }
 }

@@ -1,19 +1,19 @@
 version: '3.8'
 services:
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.2.1
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-
-  kafka:
-    image: confluentinc/cp-kafka:7.2.1
-    depends_on:
-      - zookeeper
+  elasticsearch:
+    image: elasticsearch:8.6.2
     ports:
-      - "9092:9092"
+      - "9200:9200"
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+
+  mongodb:
+    image: mongo:5.0
+    ports:
+      - "27017:27017"
+
+  redis:
+    image: redis:7.0
+    ports:
+      - "6379:6379"
