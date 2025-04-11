@@ -2,11 +2,11 @@
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
     @GetMapping("/{id}")
-    public User getUser(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public Map<String, Object> getUser(@PathVariable Long id) {
+        Map<String, Object> user = new HashMap<>();
+        user.put("id", id);
+        user.put("name", "User " + id);
+        return user;
     }
 }
